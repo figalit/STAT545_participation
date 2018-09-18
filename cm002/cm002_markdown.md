@@ -4,8 +4,7 @@
 
 Markdown! yay
 
-Bold: __bold__ or italic: _italic_. 
-`code font` single code
+Bold: __bold__ or italic: _italic_ or single code: `code font` 
 
 Block of code:
 ```
@@ -14,7 +13,7 @@ code
 code
 ```
 
-[Google](http://google.com). 
+[Google link](http://google.com). 
 
 normal list: 
 

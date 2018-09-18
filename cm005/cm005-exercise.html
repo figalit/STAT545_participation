@@ -368,23 +368,88 @@ if (my_commute &gt; 30) {
 <div id="relationalcomparison-and-logical-operators-in-r" class="section level1">
 <h1>Relational/Comparison and Logical Operators in R</h1>
 <ol style="list-style-type: decimal">
-<li><p>Find all entries of Canada and Algeria occuring in the ’60s.</p></li>
-<li>Find all entries of Canada, and entries of Algeria occuring in the ’60s.</li>
-<li><p>Find all entries <em>not</em> including Canada and Algeria.</p></li>
+<li>Find all entries of Canada and Algeria occuring in the ’60s.</li>
 </ol>
+<pre class="r"><code>canada_algeria &lt;- gapminder %&gt;%
+  filter((country == &quot;Canada&quot; | country == &quot;Algeria&quot;) &amp; year &gt;= 1960 &amp; year &lt; 1970)
+canada_algeria_easier_written &lt;- gapminder %&gt;%
+  filter(country %in% c(&quot;Canada&quot;, &quot;Algeria&quot;), year &gt;= 1960, year &lt; 1970)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Find all entries of Canada, and entries of Algeria occuring in the ’60s.</li>
+</ol>
+<pre class="r"><code>canada_and_algeriaonly_condition &lt;- gapminder %&gt;%
+  filter((country == &quot;Canada&quot;) | (country == &quot;Algeria&quot; &amp; year &gt;= 1960 &amp; year &lt; 1970))</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Find all entries <em>not</em> including Canada and Algeria.</li>
+</ol>
+<pre class="r"><code>no_canada_algeria &lt;- gapminder %&gt;%
+  filter(!country %in% c(&quot;Canada&quot;, &quot;Algeria&quot;))</code></pre>
 </div>
 <div id="bonus-exercises" class="section level1">
 <h1>Bonus Exercises</h1>
 <p>If there’s time remaining, we’ll practice with these three exercises. I’ll give you 1 minute for each, then we’ll go over the answer.</p>
 <ol style="list-style-type: decimal">
-<li><p>Take all countries in Europe that have a GDP per capita greater than 10000, and select all variables except <code>gdpPercap</code>. (Hint: use <code>-</code>).</p></li>
-<li><p>Take the first three columns, and extract the names.</p></li>
+<li>Take all countries in Europe that have a GDP per capita greater than 10000, and select all variables except <code>gdpPercap</code>. (Hint: use <code>-</code>).</li>
+</ol>
+<pre class="r"><code>a &lt;- gapminder %&gt;%
+  filter(gdpPercap &gt; 10000) %&gt;%
+  select(-gdpPercap)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Take the first three columns, and extract the names. Note: I’m assuming this is the names of the first thre columns of the above variable(bonus task 1 variable).</li>
+</ol>
+<pre class="r"><code>a</code></pre>
+<pre><code>## # A tibble: 392 x 5
+##    country   continent  year lifeExp      pop
+##    &lt;fct&gt;     &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;
+##  1 Argentina Americas   1977    68.5 26983828
+##  2 Argentina Americas   1997    73.3 36203463
+##  3 Argentina Americas   2007    75.3 40301927
+##  4 Australia Oceania    1952    69.1  8691212
+##  5 Australia Oceania    1957    70.3  9712569
+##  6 Australia Oceania    1962    70.9 10794968
+##  7 Australia Oceania    1967    71.1 11872264
+##  8 Australia Oceania    1972    71.9 13177000
+##  9 Australia Oceania    1977    73.5 14074100
+## 10 Australia Oceania    1982    74.7 15184200
+## # ... with 382 more rows</code></pre>
+<pre class="r"><code>select(a, country:year)</code></pre>
+<pre><code>## # A tibble: 392 x 3
+##    country   continent  year
+##    &lt;fct&gt;     &lt;fct&gt;     &lt;int&gt;
+##  1 Argentina Americas   1977
+##  2 Argentina Americas   1997
+##  3 Argentina Americas   2007
+##  4 Australia Oceania    1952
+##  5 Australia Oceania    1957
+##  6 Australia Oceania    1962
+##  7 Australia Oceania    1967
+##  8 Australia Oceania    1972
+##  9 Australia Oceania    1977
+## 10 Australia Oceania    1982
+## # ... with 382 more rows</code></pre>
+<pre class="r"><code>distinct(a, country, continent)</code></pre>
+<pre><code>## # A tibble: 57 x 2
+##    country   continent
+##    &lt;fct&gt;     &lt;fct&gt;    
+##  1 Argentina Americas 
+##  2 Australia Oceania  
+##  3 Austria   Europe   
+##  4 Bahrain   Asia     
+##  5 Belgium   Europe   
+##  6 Botswana  Africa   
+##  7 Bulgaria  Europe   
+##  8 Canada    Americas 
+##  9 Chile     Americas 
+## 10 Croatia   Europe   
+## # ... with 47 more rows</code></pre>
+<ol start="3" style="list-style-type: decimal">
 <li>Of the <code>iris</code> data frame, take all columns that start with the word “Petal”.
 <ul>
 <li>Hint: take a look at the “Select helpers” documentation by running the following code: <code>?tidyselect::select_helpers</code>.</li>
 <li>Exercise from <a href="https://www.r-exercises.com/2017/10/19/dplyr-basic-functions-exercises/">r-exercises</a>.</li>
 </ul></li>
 </ol>
+<pre class="r"><code>iris_stuff &lt;- select(iris, starts_with(&quot;Petal&quot;))</code></pre>
 </div>
 
 

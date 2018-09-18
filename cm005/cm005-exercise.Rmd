@@ -107,18 +107,44 @@ Your task is to use metaprogramming to check whether a response (like the one ab
 # Relational/Comparison and Logical Operators in R
 
 1. Find all entries of Canada and Algeria occuring in the '60s. 
-
+```{r}
+canada_algeria <- gapminder %>%
+  filter((country == "Canada" | country == "Algeria") & year >= 1960 & year < 1970)
+canada_algeria_easier_written <- gapminder %>%
+  filter(country %in% c("Canada", "Algeria"), year >= 1960, year < 1970)
+```
 2. Find all entries of Canada, and entries of Algeria occuring in the '60s. 
+```{r}
+canada_and_algeriaonly_condition <- gapminder %>%
+  filter((country == "Canada") | (country == "Algeria" & year >= 1960 & year < 1970))
+```
 3. Find all entries _not_ including Canada and Algeria.
+```{r}
+no_canada_algeria <- gapminder %>%
+  filter(!country %in% c("Canada", "Algeria"))
+```
 
 # Bonus Exercises
 
 If there's time remaining, we'll practice with these three exercises. I'll give you 1 minute for each, then we'll go over the answer.
 
 1. Take all countries in Europe that have a GDP per capita greater than 10000, and select all variables except `gdpPercap`. (Hint: use `-`).
-
+```{r}
+a <- gapminder %>%
+  filter(gdpPercap > 10000) %>%
+  select(-gdpPercap)
+```
 2. Take the first three columns, and extract the names.
+Note: I'm assuming this is the names of the first thre columns of the above variable(bonus task 1 variable).
+```{r}
+a
+select(a, country:year)
+distinct(a, country, continent)
+```
 
 3. Of the `iris` data frame, take all columns that start with the word "Petal". 
     - Hint: take a look at the "Select helpers" documentation by running the following code: `?tidyselect::select_helpers`.
     - Exercise from [r-exercises](https://www.r-exercises.com/2017/10/19/dplyr-basic-functions-exercises/).
+```{r}
+iris_stuff <- select(iris, starts_with("Petal"))
+```

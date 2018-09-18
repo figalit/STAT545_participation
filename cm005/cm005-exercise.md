@@ -307,8 +307,24 @@ Your task is to use metaprogramming to check whether a response (like the one ab
 
 1. Find all entries of Canada and Algeria occuring in the '60s. 
 
+```r
+canada_algeria <- gapminder %>%
+  filter((country == "Canada" | country == "Algeria") & year >= 1960 & year < 1970)
+canada_algeria_easier_written <- gapminder %>%
+  filter(country %in% c("Canada", "Algeria"), year >= 1960, year < 1970)
+```
 2. Find all entries of Canada, and entries of Algeria occuring in the '60s. 
+
+```r
+canada_and_algeriaonly_condition <- gapminder %>%
+  filter((country == "Canada") | (country == "Algeria" & year >= 1960 & year < 1970))
+```
 3. Find all entries _not_ including Canada and Algeria.
+
+```r
+no_canada_algeria <- gapminder %>%
+  filter(!country %in% c("Canada", "Algeria"))
+```
 
 # Bonus Exercises
 
@@ -316,8 +332,81 @@ If there's time remaining, we'll practice with these three exercises. I'll give 
 
 1. Take all countries in Europe that have a GDP per capita greater than 10000, and select all variables except `gdpPercap`. (Hint: use `-`).
 
+```r
+a <- gapminder %>%
+  filter(gdpPercap > 10000) %>%
+  select(-gdpPercap)
+```
 2. Take the first three columns, and extract the names.
+Note: I'm assuming this is the names of the first thre columns of the above variable(bonus task 1 variable).
+
+```r
+a
+```
+
+```
+## # A tibble: 392 x 5
+##    country   continent  year lifeExp      pop
+##    <fct>     <fct>     <int>   <dbl>    <int>
+##  1 Argentina Americas   1977    68.5 26983828
+##  2 Argentina Americas   1997    73.3 36203463
+##  3 Argentina Americas   2007    75.3 40301927
+##  4 Australia Oceania    1952    69.1  8691212
+##  5 Australia Oceania    1957    70.3  9712569
+##  6 Australia Oceania    1962    70.9 10794968
+##  7 Australia Oceania    1967    71.1 11872264
+##  8 Australia Oceania    1972    71.9 13177000
+##  9 Australia Oceania    1977    73.5 14074100
+## 10 Australia Oceania    1982    74.7 15184200
+## # ... with 382 more rows
+```
+
+```r
+select(a, country:year)
+```
+
+```
+## # A tibble: 392 x 3
+##    country   continent  year
+##    <fct>     <fct>     <int>
+##  1 Argentina Americas   1977
+##  2 Argentina Americas   1997
+##  3 Argentina Americas   2007
+##  4 Australia Oceania    1952
+##  5 Australia Oceania    1957
+##  6 Australia Oceania    1962
+##  7 Australia Oceania    1967
+##  8 Australia Oceania    1972
+##  9 Australia Oceania    1977
+## 10 Australia Oceania    1982
+## # ... with 382 more rows
+```
+
+```r
+distinct(a, country, continent)
+```
+
+```
+## # A tibble: 57 x 2
+##    country   continent
+##    <fct>     <fct>    
+##  1 Argentina Americas 
+##  2 Australia Oceania  
+##  3 Austria   Europe   
+##  4 Bahrain   Asia     
+##  5 Belgium   Europe   
+##  6 Botswana  Africa   
+##  7 Bulgaria  Europe   
+##  8 Canada    Americas 
+##  9 Chile     Americas 
+## 10 Croatia   Europe   
+## # ... with 47 more rows
+```
 
 3. Of the `iris` data frame, take all columns that start with the word "Petal". 
     - Hint: take a look at the "Select helpers" documentation by running the following code: `?tidyselect::select_helpers`.
     - Exercise from [r-exercises](https://www.r-exercises.com/2017/10/19/dplyr-basic-functions-exercises/).
+
+```r
+iris_stuff <- select(iris, starts_with("Petal"))
+```

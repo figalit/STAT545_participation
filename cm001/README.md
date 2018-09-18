@@ -1,0 +1,1 @@
+# I have introduced myself [here](https://github.com/STAT545-UBC/Discussion-Internal/issues/1#issuecomment-422114981) 

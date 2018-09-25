@@ -180,6 +180,18 @@ Let's see how Rwanda's life expectancy and GDP per capita have evolved over time
 -   Add `arrow=arrow()` option.
 -   Add `geom_text`, with year label.
 
+``` r
+gapminder %>% 
+    filter(country == "Rwanda") %>%
+    arrange(year) %>% 
+    ggplot(aes(gdpPercap, lifeExp)) +
+    #scale_x_log10() +
+    geom_point() +
+    geom_path(arrow=arrow())
+```
+
+![](cm007-participation_files/figure-markdown_github/unnamed-chunk-12-1.png)
+
 Two categorical variables
 -------------------------
 
@@ -189,8 +201,12 @@ Try `cyl` (number of cylinders) ~ `am` (transmission) in the `mtcars` data frame
 -   `geom_count()`.
 -   `geom_bin2d()`. Compare with `geom_tile()` with `fill` aes.
 
-Overplotting
-------------
+``` r
+ggplot(mtcars, aes(factor(cyl), factor(am))) +
+    geom_bin2d()
+```
+
+![](cm007-participation_files/figure-markdown_github/unnamed-chunk-13-1.png) \#\# Overplotting
 
 Try a scatterplot with:
 
@@ -199,14 +215,42 @@ Try a scatterplot with:
 -   `geom_density2d()`
 -   `geom_smooth()`
 
-Bar plots
----------
+``` r
+gvsl + geom_hex()
+```
+
+    ## Warning: Computation failed in `stat_binhex()`:
+    ## Package `hexbin` required for `stat_binhex`.
+    ## Please install and try again.
+
+![](cm007-participation_files/figure-markdown_github/unnamed-chunk-14-1.png)
+
+``` r
+gvsl + geom_density2d()
+```
+
+![](cm007-participation_files/figure-markdown_github/unnamed-chunk-14-2.png)
+
+``` r
+gvsl + geom_point(alpha=0.1) + geom_smooth(method="lm")
+```
+
+![](cm007-participation_files/figure-markdown_github/unnamed-chunk-14-3.png) \#\# Bar plots
 
 How many countries are in each continent? Use the year 2007.
 
 1.  After filtering the gapminder data to 2007, make a bar chart of the number of countries in each continent. Store everything except the geom in the variable `d`.
 
-2.  Notice the y-axis. Oddly, `ggplot2` doesn't make it obvious how to change to proportion. Try adding a `y` aesthetic: `y=..count../sum(..count..)`.
+``` r
+gapminder %>% 
+    filter(year == 2007) %>% 
+    ggplot(aes(x=continent)) +
+    geom_bar()
+```
+
+![](cm007-participation_files/figure-markdown_github/unnamed-chunk-15-1.png)
+
+1.  Notice the y-axis. Oddly, `ggplot2` doesn't make it obvious how to change to proportion. Try adding a `y` aesthetic: `y=..count../sum(..count..)`.
 
 **Uses of bar plots**: Get a sense of relative quantities of categories, or see the probability mass function of a categorical random variable.
 
@@ -214,6 +258,12 @@ Polar coordinates
 -----------------
 
 -   Add `coord_polar()` to a scatterplot.
+
+``` r
+gvsl + geom_point() + coord_polar()
+```
+
+![](cm007-participation_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
 Want more practice?
 ===================

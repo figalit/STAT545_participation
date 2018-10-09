@@ -138,17 +138,22 @@ a * 1:3 # recycling
 This is true of comparison operators, too. Make a vector of logicals using a comparison operator.
 
 ```{r}
-
+a > 0
 ```
 
 
 Now try a boolean operator. Note that && and || are NOT vectorized!
 
 ```{r}
-
+a < 5
+```
+```{r}
+a > 0 & a < 5 # vectorized, bit manipulation
 ```
 
-
+```{r}
+a > 0 && a < 5
+```
 Recycling works with assignment, too. Replace the entire vector a with 1:2 repeated:
 
 ```{r}

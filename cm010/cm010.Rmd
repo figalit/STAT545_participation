@@ -1,12 +1,6 @@
 ---
 title: "STAT 545 Class Meeting 10"
-output:
-    html_notebook:
-        toc: true
-        theme: cerulean
-        number_sections: true
-editor_options: 
-  chunk_output_type: inline
+output: github_document
 ---
 
 # Learning Objectives
@@ -15,6 +9,7 @@ editor_options:
 ```{r setup, include=FALSE}
 suppressPackageStartupMessages(library(tidyverse))
 knitr::opts_chunk$set(fig.width=4, fig.height=3)
+
 ```
 
 #### Resources
@@ -31,7 +26,6 @@ We are going to use a set of datasets that Joey put together for us. You can ins
 
 ```{r}
 # if you have not installed devtools, time to do it (uncomment following line)
-install.packages("devtools")
 # uncomment and run the following line to get the `singer` package
 devtools::install_github("JoeyBernhardt/singer")
 ```
@@ -127,8 +121,8 @@ Observe the number of rows and the first entries: what do you think it happened?
 We can go back to the wide format using `tidyr`'s function `spread()`. Yet, be braced for a problem:
 
 ```{r}
-hfd_y_long %>%
-  spread(measure, Value)
+# hfd_y_long %>%
+  # spread(measure, Value)
 ```
 
 What did go wrong here? As we had more than one song per year, when we made it long we lost some information: we don't know how to reassemble the wide table. Let's try again, but with additional wizardry: remember that if you want to gather and then spread, you need to have in the dataframe some column(s) uniquely identifying each row. In this case `song_id` does the magic.

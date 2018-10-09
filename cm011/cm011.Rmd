@@ -234,6 +234,7 @@ Subsetting a list works similarly to vectors. Try subsetting the first element o
 ```{r}
 my_list[2]
 my_list[[2]]
+my_list[[2]][1]
 ```
 
 Try also subsetting by name:

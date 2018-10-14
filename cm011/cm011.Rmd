@@ -302,7 +302,7 @@ By the way: the global environment is an object, too! It's the output of `global
 globalenv()
 .GlobalEnv
 ```
-
+  
 ## The Search Path
 
 How does R know what `iris` is, yet `iris` does not appear in the global environment? What about functions like `length`, `sum`, and `print` (which are all objects, too)?

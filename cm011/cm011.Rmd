@@ -33,7 +33,8 @@ print(class(sum))
 Usually, there's no need to fuss about these differences: just use the `is.*()` family of functions. Give it a try:
 
 ```{r}
-
+is.numeric(a)
+is.data.frame(a)
 ```
 
 We can also coerce objects to take on a different form, typically using the `as.*()` family of functions. We can't always coerce! You'll get a sense of this over time, but try:
@@ -43,7 +44,10 @@ We can also coerce objects to take on a different form, typically using the `as.
 - Coercing a number to a data.frame. `letters` to a data.frame.
 
 ```{r}
-
+as.character(100)
+as.numeric("100")*2
+# as.numeric("hello")
+as.data.frame(letters)
 ```
 
 There is also a slight difference between coercion and conversion, but this is usually not important.
@@ -125,13 +129,14 @@ a^2
 Multiply each component by 1 through its length:
 
 ```{r}
-a* 1:10
+a * 1:10
 ```
 
 It's important to know that R will silently recycle! Unless the length of one vector is not divisible by the other. Let's see:
 
 ```{r}
 a * 1:3 # recycling
+a * 1:2
 ```
 
 
@@ -146,6 +151,11 @@ Now try a boolean operator. Note that && and || are NOT vectorized!
 
 ```{r}
 a < 5
+a > 0 & a < 5
+a > 0 && a < 5
+# Use functions "all" or "any" to reduce a vector of non-1 length.
+any(a > 0 & a < 5)
+all(a > 0 & a < 5)
 ```
 ```{r}
 a > 0 & a < 5 # vectorized, bit manipulation

@@ -1,2 +1,3 @@
-# Ignore all mac-related files added 
+# Ignore all mac related added files.
 *.DS_Store
+*__pycache__*

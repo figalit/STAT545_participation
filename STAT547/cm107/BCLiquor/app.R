@@ -8,16 +8,23 @@
 #
 
 library(shiny)
+library(tidyverse)
 
 # load data
 bcl <- read.csv("~/Desktop/STAT/STAT-participation/STAT547/cm107/BCLiquor/bcl-data.csv", stringsAsFactors = FALSE)
-
+beverages = unique(bcl$Type)
 
 ui <- fluidPage(
   titlePanel("BC Liquor Price App", 
              windowTitle = "BCL app"), 
   sidebarLayout(
-    sidebarPanel("This is in sidebar"), 
+    sidebarPanel(
+      sliderInput("priceInput", "Select your desired price range.",
+                  min = 0, max = 100, value = c(15, 30), pre="$"), 
+      radioButtons("typeInput", "Select kind of beverage", 
+                   choices = beverages, 
+                   selected = beverages[1])
+    ), 
     mainPanel(
       plotOutput("price_hist"), 
       tableOutput("bcl_data")
@@ -26,8 +33,22 @@ ui <- fluidPage(
 )
 
 server <- function(input, output) {
-  output$price_hist <- renderPlot(ggplot2::qplot(bcl$Price))
-  output$bcl_data <- renderTable(bcl)
+  # observe(print(input$priceInput))
+  bcl_filter <- reactive({
+    bcl %>% 
+    filter(Price < input$priceInput[2], 
+           Price > input$priceInput[1], 
+           Type == input$typeInput)
+  })
+  
+  output$price_hist <- renderPlot(
+    bcl_filter() %>%
+      ggplot(aes(Price)) +
+      geom_histogram()
+  )
+  output$bcl_data <- renderTable({
+    bcl_filter()
+  })
 }
 
 # Run the application 
